@@ -92,10 +92,14 @@ class RequestMixin:
         :param silent: perform file retrieval silently; default False"""
         args = self._expand_curl_args()
         args.extend(["--silent" if silent else "--progress-bar", url, "-o", str(dest), "--create-dirs"])
+        
         kwargs = {"capture_output": silent}
 
         if self.is_compressed(url):
             args.extend(["--compressed"])
+
+        if dest.exists():
+            args.extend(["-z", str(dest)])
 
         p = curl(*args, **kwargs)
 
