@@ -18,7 +18,8 @@ class ParsersMixin:
 
     APPLICATION_PATHS: dict[str, str] = {
         "garageband": "/Applications/GarageBand.app",
-        "logicpro": "/Applications/Logic Pro X.app",
+        "logicpro": "/Applications/Logic Pro.app",
+        "logicprox": "/Applications/Logic Pro X.app", # Since 11.0.1 this has changed to "/Applications/Logic Pro.app"
         "mainstage": "/Applications/MainStage 3.app",
     }
 
