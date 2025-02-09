@@ -11,7 +11,7 @@ def construct_arguments(config: list[dict[str, Any]]) -> argparse.ArgumentParser
     :param config: a list of dictionary objects representing argument configuration"""
     desc = (
         "loopdown can be used to download, install, mirror, or discover information about the additional "
-        "audio content that Apple provides for the audio editing/mixing software programs GarageBand, LogicPro X "
+        "audio content that Apple provides for the audio editing/mixing software programs GarageBand, Logic Pro"
         ", and MainStage3."
     )
     help_parser = argparse.ArgumentParser(description=desc, epilog=vers_str, add_help=False)

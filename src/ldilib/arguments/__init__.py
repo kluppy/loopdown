@@ -254,7 +254,7 @@ arg_config = [
             "action": "store_true",
             "dest": "discover_plists",
             "required": False,
-            "help": "discover the property lists hosted by Apple for GarageBand, Logic Pro X, and MainStage 3",
+            "help": "discover the property lists hosted by Apple for GarageBand, Logic Pro, and MainStage 3",
         },
     },
     {
