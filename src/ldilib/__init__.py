@@ -125,10 +125,13 @@ class Loopdown(ParsersMixin, RequestMixin):
             counter = f"{packages.index(package) + 1} of {total_packages}"
 
             if package.status_ok:
-                if self.dry_run:
-                    prefix = "Download" if not self.install else "Download and install"
-                elif not self.dry_run:
-                    prefix = "Downloading" if not self.install else "Downloading and installing"
+                if package.is_unmodified and not self.force:
+                    prefix = "Skip Unchanged" if self.dry_run else "Skipping Unchanged"
+                else:
+                    if self.dry_run:
+                        prefix = "Download" if not self.install else "Download and install"
+                    elif not self.dry_run:
+                        prefix = "Downloading" if not self.install else "Downloading and installing"
             else:
                 prefix = "Package error"
                 errors += 1
@@ -141,7 +144,8 @@ class Loopdown(ParsersMixin, RequestMixin):
                     package.download_dest.unlink(missing_ok=True)
 
                 if package.status_ok:
-                    pkg = self.get_file(package.download_url, package.download_dest, self.silent)
+                    if self.force or not package.is_unmodified:
+                        pkg = self.get_file(package.download_url, package.download_dest, self.silent)
 
                 if self.install and pkg:
                     self.log.info(f"Installing {counter} - {package.download_dest.name!r}")

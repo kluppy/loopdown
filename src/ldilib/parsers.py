@@ -277,8 +277,21 @@ class ParsersMixin:
             if k in pkg_attrs:
                 attr = pkg_attrs[k]
                 result[attr] = v
+        
+        if not result.get("is_mandatory"):
+            result["is_mandatory"] = False
 
-        result.update(self.parse_updated_package_attr_vals(result))
+        do_curl = False
+        if result["is_mandatory"]:
+            if self.mandatory or not self.optional:
+                do_curl = True
+        else:
+            if self.optional or not self.mandatory:
+                do_curl = True
+
+        if do_curl:
+            result.update(self.parse_updated_package_attr_vals(result))
+        
         self.PROCESSED_PKGS.add(result.get("download_name"))  # Track already processed packages
         package = LoopDownloadPackage(**result)
 
@@ -307,11 +320,9 @@ class ParsersMixin:
         pkg["download_dest"] = dest_base.joinpath(pkg_path.removeprefix("/"))
         pkg["download_size"] = Size(filesize=self.get_headers(parsed_url).get("content-size", size_fallback))
         pkg["is_compressed"] = self.is_compressed(parsed_url)
-        pkg["status_code"], pkg["status_ok"] = self.is_status_ok(parsed_url)
+        pkg["status_code"], pkg["status_ok"] = self.is_status_ok(parsed_url, pkg["download_dest"])
+        pkg["is_unmodified"] = pkg["status_code"] == 304
         pkg["install_target"] = "/"
-
-        if not pkg.get("is_mandatory"):
-            pkg["is_mandatory"] = False
 
         pkg["is_installed"] = self.any_files_installed(pkg["file_check"]) and self.package_is_installed(
             pkg["package_id"], pkg.get("package_vers", "0.0.0")

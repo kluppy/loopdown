@@ -28,6 +28,7 @@ class LoopDownloadPackage:
     status_ok: bool = field(default=None, hash=False, compare=False)
     is_compressed: bool = field(default=None, hash=False, compare=False)
     is_installed: bool = field(default=None, hash=True, compare=True)
+    is_unmodified: bool = field(default=None, hash=False, compare=False)
     file_check: list[str] | str = field(default=None, hash=False, compare=False)
     install_size: int | float = field(default=None, hash=False, compare=False)
     install_target: str = field(default="/", hash=False, compare=False)

@@ -67,11 +67,15 @@ class RequestMixin:
         :param url: url to check the content-encoding header value of"""
         return self.get_headers(url).get(_header, False) == _encoding
 
-    def is_status_ok(self, url: str, _ok_statuses: list[int] = [*range(200, 300)]) -> bool:
+    def is_status_ok(self, url: str, dest: Path=None, _ok_statuses: list[int] = [*range(200, 300), 304]) -> bool:
         """Determine if the URL has a status code that is in an OK range.
         :param url: url to check the status code of"""
         args = self._expand_curl_args()
         args.extend(["-I", "--silent", "-o", "/dev/null", "-w", "%{http_code}", url])
+
+        if dest is not None and dest.exists():
+            args.extend(["-z", str(dest)])
+
         kwargs = {"capture_output": True, "encoding": "utf-8"}
         p = curl(*args, **kwargs)
 
@@ -97,9 +101,6 @@ class RequestMixin:
 
         if self.is_compressed(url):
             args.extend(["--compressed"])
-
-        if dest.exists():
-            args.extend(["-z", str(dest)])
 
         p = curl(*args, **kwargs)
 
