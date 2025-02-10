@@ -68,7 +68,7 @@ usage: loopdown [-h] [--advanced-help] [--version] [--log-level [level]] [-n] [-
                 [--cache-server server] [--pkg-server [server]] [--discover-plists]
 
 loopdown can be used to download, install, mirror, or discover information about the additional audio content that Apple provides for the audio editing/mixing software programs
-GarageBand, LogicPro X , and MainStage3.
+GarageBand, Logic Pro, and MainStage3.
 
 options:
   -h, --help            show this help message and exit
@@ -96,7 +96,7 @@ options:
                         requires either '--create-mirror' or '-i/--install'
   --pkg-server [server]
                         local server of mirrored content, for example 'http://example.org', cannot be used with'--discover-plists', requires '-i/--install'
-  --discover-plists     discover the property lists hosted by Apple for GarageBand, Logic Pro X, and MainStage 3
+  --discover-plists     discover the property lists hosted by Apple for GarageBand, Logic Pro, and MainStage 3
 
 loopdown v1.0.20230726, licensed under the Apache License Version 2.0
 ```
