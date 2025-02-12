@@ -1,49 +1,5 @@
-I cannot continue maintaining this anymore, I tried, but I'm just not in a space where I can keep up with this, and I have no passion/desire to learn Swift to migrate this tool (which desperately needs doing).
-
-I really hope someone else can step up, or better yet, Apple can get their act together and make available any tools that they have that could make the lives better for Mac admins that need to deploy Garageband, et al.
-
-
-Thanks.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+This is a fork of the loopdown project by carlashley I will use to maintain a fleet of Macs running Logic Pro.
+I will attempt to maintain it as best I can and welcome any pull requests that help.
 
 
 # loopdown
@@ -54,7 +10,7 @@ This should run on any version of Python 3 after/including 3.10; `packaging` wil
 Run `./build.sh` with no additional arguments to create a compressed zipapp version of this utility; please note the default Python interpreter and shebang used is `/usr/bin/env python3`, if a more specific shebang needs to be used, run `./build.sh /new/shebang/path`, for example: `./build.sh /usr/local/bin/python3`. This will generate a new "build" in `./dist/zipapp/usr/local/bin/custom/`.
 
 ## Support
-This tool is provided 'as is', if an application is prompting to install a package that `loopdown` has installed, please use this [issue form](https://github.com/carlashley/loopdown/issues/new?assignees=carlashley&labels=install+prompt&projects=&template=package-install-prompt-issue.md&title= "raise an issue").
+This tool is provided 'as is', if an application is prompting to install a package that `loopdown` has installed, please use this [issue form](https://github.com/kluppy/loopdown/issues/new?assignees=kluppy&labels=install+prompt&projects=&template=package-install-prompt-issue.md&title= "raise an issue").
 Please note, responses to issues raised may be delayed.
 
 Feature requests can be made, but this project has been deliberately kept to a very defined scope of behaviour/capability.

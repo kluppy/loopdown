@@ -341,6 +341,9 @@ class ParsersMixin:
         base = f"{base}/" if not base.endswith("/") else base  # Ensure 'urljoin' correctly joins url paths
         return urljoin(base, name)
 
+    # TODO, implement Major, minor, patch search
+    # The current Garage Band plist is garageband10412.plist which is not discovered by this function.
+    # garageband [10] [4] [12].plist Version 10.4.12
     def parse_discovery(self, apps: list[str], r: list[int]) -> list[str]:
         """Discovery property lists for audio content downloads.
         :param r: range starting from a minimum value to a maximum value"""
