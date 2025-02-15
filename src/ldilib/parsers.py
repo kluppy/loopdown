@@ -352,8 +352,9 @@ class ParsersMixin:
             "logicpro": sorted([10, 11]),
             "mainstage": sorted([3]),
         }
-        start = 0
-        finish = 20
+        minor_start = 0
+        minor_finish = 9
+        start, finish = r
 
         for app in apps:
             versions = major_vers.get(app, [])
@@ -361,11 +362,11 @@ class ParsersMixin:
             for app_ver in versions:
                 self.log.info(f"Discovering property list files for {app!r}, major version {app_ver!r}")
 
-                for minor in range(start, finish + 1):
+                for minor in range(minor_start, minor_finish + 1):
 
                     plist_found = False
                     first_set = 4   # So far the highest patch number until finding a plist is 3
-                                    # 4 feels like enough
+                                    # 4 feels like enough to save some time but still find them
 
                     if finish < first_set:
                         first_set = finish
@@ -379,7 +380,7 @@ class ParsersMixin:
                             plist_found = True
                     
                     if plist_found and finish > first_set:
-                        for target in range(first_set, finish + 1):
+                        for target in range(first_set + 1, finish + 1):
                             url = urljoin(self.feed_base_url, f"{app}{app_ver}{minor}{target}.plist")
                             status_code, status_ok = self.is_status_ok(url)
 
