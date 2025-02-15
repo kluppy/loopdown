@@ -363,11 +363,25 @@ class ParsersMixin:
 
                 for minor in range(start, finish + 1):
 
-                    for target in range(start, finish + 1):
-                        #target = f"{target:02d}"  # this doesn't seem to hurt MainStage 3.x releases.
+                    plist_found = False
+                    first_set = 4   # So far the highest patch number until finding a plist is 3
+                                    # 4 feels like enough
 
+                    if finish < first_set:
+                        first_set = finish
+
+                    for target in range(start, first_set + 1):
                         url = urljoin(self.feed_base_url, f"{app}{app_ver}{minor}{target}.plist")
                         status_code, status_ok = self.is_status_ok(url)
 
                         if status_ok:
                             self.log.info(f"Found property list file: {Path(url).name!r}")
+                            plist_found = True
+                    
+                    if plist_found and finish > first_set:
+                        for target in range(first_set, finish + 1):
+                            url = urljoin(self.feed_base_url, f"{app}{app_ver}{minor}{target}.plist")
+                            status_code, status_ok = self.is_status_ok(url)
+
+                            if status_ok:
+                                self.log.info(f"Found property list file: {Path(url).name!r}")
