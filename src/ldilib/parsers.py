@@ -347,24 +347,27 @@ class ParsersMixin:
     def parse_discovery(self, apps: list[str], r: list[int]) -> list[str]:
         """Discovery property lists for audio content downloads.
         :param r: range starting from a minimum value to a maximum value"""
-        major_release_vers = {
+        major_vers = {
             "garageband": sorted([10]),
             "logicpro": sorted([10, 11]),
             "mainstage": sorted([3]),
         }
-        start, finish = r
+        start = 0
+        finish = 20
 
         for app in apps:
-            versions = major_release_vers.get(app, [])
+            versions = major_vers.get(app, [])
 
             for app_ver in versions:
                 self.log.info(f"Discovering property list files for {app!r}, major version {app_ver!r}")
 
-                for target in range(start, finish + 1):
-                    target = f"{target:02d}"  # this doesn't seem to hurt MainStage 3.x releases.
+                for minor in range(start, finish + 1):
 
-                    url = urljoin(self.feed_base_url, f"{app}{app_ver}{target}.plist")
-                    status_code, status_ok = self.is_status_ok(url)
+                    for target in range(start, finish + 1):
+                        #target = f"{target:02d}"  # this doesn't seem to hurt MainStage 3.x releases.
 
-                    if status_ok:
-                        self.log.info(f"Found property list file: {Path(url).name!r}")
+                        url = urljoin(self.feed_base_url, f"{app}{app_ver}{minor}{target}.plist")
+                        status_code, status_ok = self.is_status_ok(url)
+
+                        if status_ok:
+                            self.log.info(f"Found property list file: {Path(url).name!r}")
