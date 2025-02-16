@@ -261,6 +261,7 @@ arg_config = [
         "hidden": True,
         "args": ["--discover-plists-range"],
         "kwargs": {
+            "deprecated": True,
             "dest": "discover_plists_range",
             "type": int,
             "nargs": 2,
@@ -269,6 +270,38 @@ arg_config = [
             "required": False,
             "help": (
                 "specify the start/finish range for property list files; default is (default), "
+                "requires '--discover-plists'"
+            ),
+        },
+    },
+    {
+        "hidden": True,
+        "args": ["--discover-minor-range"],
+        "kwargs": {
+            "dest": "discover_minor_range",
+            "type": int,
+            "nargs": 2,
+            "metavar": ("[min]", "[max]"),
+            "default": [0, 9],
+            "required": False,
+            "help": (
+                "specify the start/finish range for minor version number in property list files; default is (default), "
+                "requires '--discover-plists'"
+            ),
+        },
+    },
+    {
+        "hidden": True,
+        "args": ["--discover-patch-range"],
+        "kwargs": {
+            "dest": "discover_patch_range",
+            "type": int,
+            "nargs": 2,
+            "metavar": ("[min]", "[max]"),
+            "default": [0, 15],
+            "required": False,
+            "help": (
+                "specify the start/finish range for patch version number in property list files; default is (default), "
                 "requires '--discover-plists'"
             ),
         },

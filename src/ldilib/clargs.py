@@ -114,6 +114,30 @@ def arguments() -> argparse.Namespace:
         prefix = opts_map["discover_plists_range"]
         argstr = join_args([opts_map["discover_plists"]])
         parser.error(f"argument {prefix}: not allowed without: {argstr}")
+    
+    # --discover-plists-range not allowed with --discover-minor-range
+    if args.discover_plists_range and args.discover_minor_range:
+        prefix = opts_map["discover_plists_range"]
+        argstr = join_args([opts_map["discover_minor_range"]])
+        parser.error(f"argument {prefix}: not allowed with: {argstr}")
+    
+    # --discover-plists-range not allowed with --discover-patch-range
+    if args.discover_plists_range and args.discover_patch_range:
+        prefix = opts_map["discover_plists_range"]
+        argstr = join_args([opts_map["discover_patch_range"]])
+        parser.error(f"argument {prefix}: not allowed with: {argstr}")
+
+    # --discover-minor-range not allowed without --discover-plists
+    if args.discover_minor_range and not args.discover_minor_range == [0, 9] and not args.discover_plists:
+        prefix = opts_map["discover_minor_range"]
+        argstr = join_args([opts_map["discover_plists"]])
+        parser.error(f"argument {prefix}: not allowed without: {argstr}")
+
+    # --discover-patch-range not allowed without --discover-plists
+    if args.discover_patch_range and not args.discover_patch_range == [0, 15] and not args.discover_plists:
+        prefix = opts_map["discover_patch_range"]
+        argstr = join_args([opts_map["discover_plists"]])
+        parser.error(f"argument {prefix}: not allowed without: {argstr}")
 
     # -f/--force not allowed without --create-mirror or -i/--install
     if args.force and not any([args.create_mirror, args.install]):
