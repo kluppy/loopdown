@@ -265,7 +265,7 @@ arg_config = [
             "type": int,
             "nargs": 2,
             "metavar": ("[min]", "[max]"),
-            "default": [0, 20],
+            "default": [0, 15],
             "required": False,
             "help": (
                 "specify the start/finish range for property list files; default is (default), "

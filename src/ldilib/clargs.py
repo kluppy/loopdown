@@ -110,7 +110,7 @@ def arguments() -> argparse.Namespace:
         parser.error(f"argument {prefix}: not allowed with {argstr}")
 
     # --discover-plists-range not allowed without --discover-plists
-    if args.discover_plists_range and not args.discover_plists_range == [0, 99] and not args.discover_plists:
+    if args.discover_plists_range and not args.discover_plists_range == [0, 15] and not args.discover_plists:
         prefix = opts_map["discover_plists_range"]
         argstr = join_args([opts_map["discover_plists"]])
         parser.error(f"argument {prefix}: not allowed without: {argstr}")
