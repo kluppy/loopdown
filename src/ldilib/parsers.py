@@ -364,14 +364,13 @@ class ParsersMixin:
                     plist_found = True
                     c_finish = 0
                     c_start = patch_start
-                    increment = 4   # So far the highest patch number until finding a plist is 3
-                                    # 4 feels like enough to save some time but still find them
-
+                    increment = 4   # How many failures allowed in a row before giving up 
+                    
                     # While plists are found, continue looking in increments until reaching limit
-                    while plist_found and c_finish <= patch_finish:
+                    while plist_found and c_start <= patch_finish:
 
                         plist_found = False
-                        c_finish =+ increment
+                        c_finish = c_finish + increment
 
                         if patch_finish < c_finish:
                             c_finish = patch_finish
