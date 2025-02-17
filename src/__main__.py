@@ -55,8 +55,14 @@ def main() -> None:
                 log.info(f"argument --discover-plists-range is deprecated.")
                 args.discover_minor_range[0] = args.discover_plists_range[0] // 10 
                 args.discover_minor_range[1] = args.discover_plists_range[1] // 10
-                args.discover_patch_range[0] = args.discover_plists_range[0] % args.discover_minor_range[0]
-                args.discover_patch_range[1] = args.discover_plists_range[1] % args.discover_minor_range[1]
+                if args.discover_minor_range[0] > 0:
+                    args.discover_patch_range[0] = args.discover_plists_range[0] % args.discover_minor_range[0]
+                else:
+                     args.discover_patch_range[0] = 0
+                if args.discover_minor_range[1] > 0:
+                    args.discover_patch_range[1] = args.discover_plists_range[1] % args.discover_minor_range[1]
+                else:
+                     args.discover_patch_range[1] = 0
             
             ld.parse_discovery(args.apps, args.discover_minor_range, args.discover_patch_range)
             sys.exit()
