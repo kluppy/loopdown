@@ -261,7 +261,7 @@ arg_config = [
         "hidden": True,
         "args": ["--discover-plists-range"],
         "kwargs": {
-            "deprecated": True,
+#            "deprecated": True, # Requires Python 3.13
             "dest": "discover_plists_range",
             "type": int,
             "nargs": 2,
