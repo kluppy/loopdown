@@ -341,7 +341,7 @@ class ParsersMixin:
         base = f"{base}/" if not base.endswith("/") else base  # Ensure 'urljoin' correctly joins url paths
         return urljoin(base, name)
 
-    def parse_discovery(self, apps: list[str], r: list[int]) -> list[str]:
+    def parse_discovery(self, apps: list[str], r_minor: list[int], r_patch: list[int]) -> list[str]:
         """Discovery property lists for audio content downloads.
         :param r: range starting from a minimum value to a maximum value"""
         major_vers = {
@@ -349,9 +349,9 @@ class ParsersMixin:
             "logicpro": sorted([10, 11]),
             "mainstage": sorted([3]),
         }
-        minor_start = 0
-        minor_finish = 9
-        patch_start, patch_finish = r
+        minor_start, minor_finish = r_minor
+        patch_start, patch_finish = r_patch
+        increment = 4   # How many failures allowed in a row before giving up
 
         for app in apps:
             versions = major_vers.get(app, [])
@@ -363,8 +363,7 @@ class ParsersMixin:
 
                     plist_found = True
                     c_finish = 0
-                    c_start = patch_start
-                    increment = 4   # How many failures allowed in a row before giving up 
+                    c_start = patch_start 
                     
                     # While plists are found, continue looking in increments until reaching limit
                     while plist_found and c_start <= patch_finish:
