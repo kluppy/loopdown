@@ -60,13 +60,15 @@ def main() -> None:
                 log.info(f"minor_range[1] {args.discover_minor_range[1]!r}.")
 
                 if args.discover_minor_range[0] > 0:
-                    args.discover_patch_range[0] = args.discover_plists_range[0] % args.discover_minor_range[0]
+                    args.discover_patch_range[0] = (args.discover_plists_range[0] 
+                        % (args.discover_minor_range[0] * 10))
                 else:
                      args.discover_patch_range[0] = 0
                 log.info(f"patch_range[0] {args.discover_patch_range[0]!r}.")
 
                 if args.discover_minor_range[1] > 0:
-                    args.discover_patch_range[1] = args.discover_plists_range[1] % args.discover_minor_range[1]
+                    args.discover_patch_range[1] = (args.discover_plists_range[1] 
+                        % (args.discover_minor_range[1] * 10))
                 else:
                      args.discover_patch_range[1] = 0
                 log.info(f"patch_range[1] {args.discover_patch_range[1]!r}.")
