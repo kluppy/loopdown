@@ -51,7 +51,25 @@ def main() -> None:
 
     try:
         if args.discover_plists:
-            ld.parse_discovery(args.apps, args.discover_plists_range)
+            # --discover-plists-range is deprecated, work around for now
+            if args.discover_plists_range != [0, 99]: 
+                log.info(f"Warning: argument --discover-plists-range is deprecated.")
+                args.discover_minor_range[0] = args.discover_plists_range[0] // 10
+                args.discover_minor_range[1] = args.discover_plists_range[1] // 10
+
+                if args.discover_minor_range[0] > 0:
+                    args.discover_patch_range[0] = (args.discover_plists_range[0] 
+                        % (args.discover_minor_range[0] * 10))
+                else:
+                     args.discover_patch_range[0] = 0
+
+                if args.discover_minor_range[1] > 0:
+                    args.discover_patch_range[1] = (args.discover_plists_range[1] 
+                        % (args.discover_minor_range[1] * 10))
+                else:
+                     args.discover_patch_range[1] = 0
+            
+            ld.parse_discovery(args.apps, args.discover_minor_range, args.discover_patch_range)
             sys.exit()
         if not args.discover_plists:
             processing_str = ", ".join(f"'{item}'" for item in args.apps or args.plists)

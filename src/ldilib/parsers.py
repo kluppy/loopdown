@@ -341,30 +341,45 @@ class ParsersMixin:
         base = f"{base}/" if not base.endswith("/") else base  # Ensure 'urljoin' correctly joins url paths
         return urljoin(base, name)
 
-    # TODO, implement Major, minor, patch search
-    # The current Garage Band plist is garageband10412.plist which is not discovered by this function.
-    # garageband [10] [4] [12].plist Version 10.4.12
-    def parse_discovery(self, apps: list[str], r: list[int]) -> list[str]:
+    def parse_discovery(self, apps: list[str], r_minor: list[int], r_patch: list[int]) -> list[str]:
         """Discovery property lists for audio content downloads.
         :param r: range starting from a minimum value to a maximum value"""
-        major_release_vers = {
+        major_vers = {
             "garageband": sorted([10]),
             "logicpro": sorted([10, 11]),
             "mainstage": sorted([3]),
         }
-        start, finish = r
+        minor_start, minor_finish = r_minor
+        patch_start, patch_finish = r_patch
+        increment = 4   # How many failures allowed in a row before giving up
 
         for app in apps:
-            versions = major_release_vers.get(app, [])
+            versions = major_vers.get(app, [])
 
-            for app_ver in versions:
-                self.log.info(f"Discovering property list files for {app!r}, major version {app_ver!r}")
+            for major in versions:
+                self.log.info(f"Discovering property list files for {app!r}, major version {major!r}")
 
-                for target in range(start, finish + 1):
-                    target = f"{target:02d}"  # this doesn't seem to hurt MainStage 3.x releases.
+                for minor in range(minor_start, minor_finish + 1):
 
-                    url = urljoin(self.feed_base_url, f"{app}{app_ver}{target}.plist")
-                    status_code, status_ok = self.is_status_ok(url)
+                    plist_found = True
+                    c_finish = 0
+                    c_start = patch_start 
+                    
+                    # While plists are found, continue looking in increments until reaching limit
+                    while plist_found and c_start <= patch_finish:
 
-                    if status_ok:
-                        self.log.info(f"Found property list file: {Path(url).name!r}")
+                        plist_found = False
+                        c_finish = c_finish + increment
+
+                        if patch_finish < c_finish:
+                            c_finish = patch_finish
+
+                        for patch in range(c_start, c_finish + 1):
+                            url = urljoin(self.feed_base_url, f"{app}{major}{minor}{patch}.plist")
+                            status_code, status_ok = self.is_status_ok(url)
+
+                            if status_ok:
+                                self.log.info(f"Found property list file: {Path(url).name!r}")
+                                plist_found = True
+                    
+                        c_start = c_finish + 1
