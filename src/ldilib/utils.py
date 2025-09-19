@@ -1,6 +1,7 @@
 """Utils used in various package files."""
 import argparse
 import json
+import math
 import shutil
 import sys
 
@@ -127,6 +128,32 @@ def locate_caching_server(prefer: str = "system", rank_val: int = 1, retries: in
 def is_root() -> bool:
     """Is the effective user id root."""
     return geteuid() == 0
+
+
+def padded_counter(current: int, max: int) -> str:
+    """Calculate the padding required to standardise the spacing of the file counter.
+    :param current: the number to add padding to.
+    :param max: the number match the digit length to."""
+    padding: str = ""
+
+    if max > 0:
+        max = int(math.log10(max))+1
+    elif max == 0:
+        max = 1
+    else:
+        max = int(math.log10(-max))+2
+
+    if current > 0:
+        current = int(math.log10(current))+1
+    elif current == 0:
+        current = 1
+    else:
+        current = int(math.log10(-current))+2
+
+    for x in range(current, max):
+        padding = padding + " "
+    
+    return padding
 
 
 def validate_caching_server_url(url: str) -> None:
