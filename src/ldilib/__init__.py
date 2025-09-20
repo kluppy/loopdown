@@ -122,7 +122,7 @@ class Loopdown(ParsersMixin, RequestMixin):
 
         for package in packages:
             pkg = None
-            counter = f"{packages.index(package) + 1} of {total_packages}"
+            counter = f"{padded_counter(packages.index(package) + 1, total_packages)} of {total_packages}"
 
             if package.status_ok:
                 if package.is_unmodified and not self.force:
@@ -136,7 +136,7 @@ class Loopdown(ParsersMixin, RequestMixin):
                 prefix = "Package error"
                 errors += 1
 
-            self.log.info(f"{prefix} {padded_counter(counter, total_packages)} - {package}")
+            self.log.info(f"{prefix} {counter} - {package}")
 
             if not self.dry_run:
                 # Force download, Will not resume partials!
