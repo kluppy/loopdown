@@ -129,6 +129,18 @@ def is_root() -> bool:
     return geteuid() == 0
 
 
+def padded_counter(current: int, max: int) -> str:
+    """Add padding to the front of the counter to standardise the spacing on each line.
+    :param current: the number to add padding to.
+    :param max: the number match the digit length to."""
+    padding: str = ""
+
+    for x in range(len(str(current)), len(str(max))):
+        padding = padding + " "
+    
+    return padding + str(current)
+
+
 def validate_caching_server_url(url: str) -> None:
     """Validates that the caching server url contains the required scheme (http) and a port number
     :param url: caching server url"""

@@ -4,14 +4,14 @@ from pathlib import Path
 from typing import Optional
 from .parsers import ParsersMixin
 from .request import RequestMixin
-from .utils import clean_up_dirs
+from .utils import clean_up_dirs, padded_counter
 
 logging.getLogger(__name__).addHandler(logging.NullHandler())
 
 
 _license: str = "Apache License Version 2.0"
 _script_name: str = "loopdown"
-_version: str = "1.0.20250217"
+_version: str = "1.0.20250919"
 _version_string: str = f"{_script_name} v{_version}, licensed under the {_license}"
 
 
@@ -122,7 +122,8 @@ class Loopdown(ParsersMixin, RequestMixin):
 
         for package in packages:
             pkg = None
-            counter = f"{packages.index(package) + 1} of {total_packages}"
+            counter = padded_counter(packages.index(package) + 1, total_packages)
+            counter = f"{counter} of {total_packages}"
 
             if package.status_ok:
                 if package.is_unmodified and not self.force:

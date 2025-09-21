@@ -38,11 +38,27 @@ class ParsersMixin:
 
     @property
     def mandatory_pkgs_download_size(self) -> int:
-        return sum([pkg.download_size.filesize for pkg in self.mandatory_pkgs])
+        if self.force:
+            return sum([pkg.download_size.filesize for pkg in self.mandatory_pkgs])
+        else:
+            size = 0
+            for pkg in self.mandatory_pkgs:
+                if not pkg.is_unmodified:
+                    size = size + pkg.download_size.filesize
+            
+            return size
 
     @property
     def optional_pkgs_download_size(self) -> int:
-        return sum([pkg.download_size.filesize for pkg in self.optional_pkgs])
+        if self.force:
+            return sum([pkg.download_size.filesize for pkg in self.optional_pkgs])
+        else:
+            size = 0
+            for pkg in self.optional_pkgs:
+                if not pkg.is_unmodified:
+                    size = size + pkg.download_size.filesize
+            
+            return size
 
     @property
     def mandatory_pkgs_installed_size(self) -> int:
