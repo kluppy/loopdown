@@ -122,7 +122,8 @@ class Loopdown(ParsersMixin, RequestMixin):
 
         for package in packages:
             pkg = None
-            counter = f"{padded_counter(packages.index(package) + 1, total_packages)} of {total_packages}"
+            counter = padded_counter(packages.index(package) + 1, total_packages)
+            counter = f"{counter} of {total_packages}"
 
             if package.status_ok:
                 if package.is_unmodified and not self.force:

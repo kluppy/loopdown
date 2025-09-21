@@ -1,7 +1,6 @@
 """Utils used in various package files."""
 import argparse
 import json
-import math
 import shutil
 import sys
 
@@ -131,29 +130,15 @@ def is_root() -> bool:
 
 
 def padded_counter(current: int, max: int) -> str:
-    """Calculate the padding required to standardise the spacing of the file counter.
+    """Add padding to the front of the counter to standardise the spacing on each line.
     :param current: the number to add padding to.
     :param max: the number match the digit length to."""
     padding: str = ""
 
-    if max > 0:
-        max = int(math.log10(max))+1
-    elif max == 0:
-        max = 1
-    else:
-        max = int(math.log10(-max))+2
-
-    if current > 0:
-        current = int(math.log10(current))+1
-    elif current == 0:
-        current = 1
-    else:
-        current = int(math.log10(-current))+2
-
-    for x in range(current, max):
+    for x in range(len(str(current)), len(str(max))):
         padding = padding + " "
     
-    return padding
+    return padding + str(current)
 
 
 def validate_caching_server_url(url: str) -> None:
