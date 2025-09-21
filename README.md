@@ -23,21 +23,18 @@ Licensed under the Apache License Version 2.0. See `LICENSE` for the full licens
 usage: loopdown [-h] [--advanced-help] [--version] [--log-level [level]] [-n] [-a [app] [[app] ...] | -p [plist] [[plist] ...]] [-m] [-o] [-f] [-i] [-s] [--create-mirror [path]]
                 [--cache-server server] [--pkg-server [server]] [--discover-plists]
 
-loopdown can be used to download, install, mirror, or discover information about the additional audio content that Apple provides for the audio editing/mixing software programs
-GarageBand, Logic Pro, and MainStage3.
+loopdown can be used to download, install, mirror, or discover information about the additional audio content that Apple provides for the audio editing/mixing software programs GarageBand, Logic Pro, and MainStage3.
 
 options:
   -h, --help            show this help message and exit
   --advanced-help
   --version             show program's version number and exit
-  --log-level [level]   sets the logging level; valid options are: (choices); default is 'info'
+  --log-level [level]   sets the logging level; valid options are: 'info', or 'debug'; default is 'info'
   -n, --dry-run         perform a dry run
-  -a [app] [[app] ...], --apps [app] [[app] ...]
-                        application/s to process package content from; valid options are: 'all', 'garageband', 'logicpro', or 'mainstage', cannot be used with '--discover-plists',
-                        requires either '--create-mirror' or '-i/--install'
-  -p [plist] [[plist] ...], --plist [plist] [[plist] ...]
-                        property list/s to process package content from, use '--discover-plists' to find valid options, cannot be used with '--discover-plists', requires
-                        either/both '--cache-server' or '--create-mirror'
+  -a, --apps [app] [[app] ...]
+                        application/s to process package content from; valid options are: 'all', 'garageband', 'logicpro', or 'mainstage', requires either '--discover-plists', '--create-mirror' or '-i/--install'
+  -p, --plist [plist] [[plist] ...]
+                        property list/s to process package content from, use '--discover-plists' to find valid options, cannot be used with '--discover-plists', requires either/both '--cache-server' or '--create-mirror'
   -m, --mandatory       process all mandatory package content, cannot be used with '--discover-plists'
   -o, --optional        process all optional package content, cannot be used with '--discover-plists'
   -f, --force           force install or download regardless of pre-existing installs/download data, cannot be used with '--discover-plists'
@@ -54,7 +51,7 @@ options:
                         local server of mirrored content, for example 'http://example.org', cannot be used with'--discover-plists', requires '-i/--install'
   --discover-plists     discover the property lists hosted by Apple for GarageBand, Logic Pro, and MainStage 3
 
-loopdown v1.0.20230726, licensed under the Apache License Version 2.0
+loopdown v1.0.20250919, licensed under the Apache License Version 2.0
 ```
 
 ### How this works

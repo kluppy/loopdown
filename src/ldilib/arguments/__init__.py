@@ -46,7 +46,7 @@ arg_config = [
             "required": False,
             "help": (
                 "application/s to process package content from; valid options are: (choices), "
-                "cannot be used with '--discover-plists', requires either '--create-mirror' or '-i/--install'"
+                "requires either '--discover-plists', '--create-mirror' or '-i/--install'"
             ),
         },
     },
