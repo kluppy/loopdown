@@ -362,8 +362,8 @@ class ParsersMixin:
         :param r: range starting from a minimum value to a maximum value"""
         major_vers = {
             "garageband": sorted([10]),
-            "logicpro": sorted([10, 11]),
-            "mainstage": sorted([3]),
+            "logicpro": sorted([10, 11, 12]),
+            "mainstage": sorted([3, 4]),
         }
         minor_start, minor_finish = r_minor
         patch_start, patch_finish = r_patch
